@@ -9,7 +9,7 @@ const initialFormValues = {
   stars: [],
 };
 
-export default function MovieForm(props) {
+export default function UpdateMovie(props) {
   const [formValues, setFormValues] = useState(initialFormValues);
   const { id } = useParams();
 
@@ -32,8 +32,9 @@ export default function MovieForm(props) {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    const movieUpdates = { ...formValues, stars: formValues.stars.split(/,/) };
     axios
-      .put(`http://localhost:5000/api/movies/${id}`, formValues)
+      .put(`http://localhost:5000/api/movies/${id}`, movieUpdates)
       .then((res) => {
         props.getMovieList();
         history.push(`/movies/${id}`);
@@ -41,10 +42,6 @@ export default function MovieForm(props) {
       .catch((err) => {
         console.log(err);
       });
-
-    // postNewFriend(newFriend);
-    // setFormValues(initialFormValues);
-    // history.push('/friends');
   };
 
   return (
