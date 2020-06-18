@@ -19,7 +19,9 @@ export default function UpdateMovie(props) {
     axios
       .get(`http://localhost:5000/api/movies/${id}`)
       .then((res) => {
-        setFormValues(res.data);
+        const movieData = res.data;
+        setFormValues({ ...movieData, stars: movieData.stars.join(', ') });
+        // setFormValues(res.data);
       })
       .catch((err) => console.log(err));
   }, [id]);
